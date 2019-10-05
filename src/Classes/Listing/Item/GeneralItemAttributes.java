@@ -1,5 +1,6 @@
 package Classes.Listing.Item;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralItemAttributes {
@@ -11,6 +12,10 @@ public class GeneralItemAttributes {
     public ItemAttribute material;
 
     //other fields
-    public List<ItemMeasurement> Measurements;
-    public List<ItemSize> Size;
+    public List<ItemMeasurement> measurements;
+    public ItemSize size;
+
+    public GeneralItemAttributes() {
+        this.measurements = new ArrayList<ItemMeasurement>();
+    }
 }

@@ -1,5 +1,6 @@
 package Classes.Listing.Item;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,4 +18,9 @@ public class Item {
     public GeneralItemAttributes generalItemAttributes;
     //dynamic attributes
     public List<ItemAttribute> attributes;
+
+    public Item() {
+        this.generalItemAttributes = new GeneralItemAttributes();
+        this.attributes = new ArrayList<ItemAttribute>();
+    }
 }

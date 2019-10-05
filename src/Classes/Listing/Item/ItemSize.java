@@ -3,5 +3,9 @@ package Classes.Listing.Item;
 public class ItemSize {
     public long sizeTypeId;
     public long sizeValueId;
-    public String sizeValue;
+
+    public ItemSize(long sizeTypeId, long sizeValueId) {
+        this.sizeTypeId = sizeTypeId;
+        this.sizeValueId = sizeValueId;
+    }
 }
