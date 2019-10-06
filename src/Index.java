@@ -5,6 +5,7 @@ import Classes.Listing.Item.ItemSize;
 import Classes.Template.Attribute;
 import Classes.Template.Size;
 import Classes.Template.Template;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.Date;
@@ -58,6 +59,10 @@ public class Index {
         System.out.println("Enter the listing text (long description) for the item:");
         newItem.longDescription = input.nextLine();
         newItem.print();
+
+        Gson gson = new Gson();
+        var json = gson.toJson(newItem);
+        System.out.println(json);
     }
 
     private static long GetCategoryAndSubcategory() throws IOException {
@@ -142,7 +147,7 @@ public class Index {
             System.out.println("Enter the ID for the secondary color from the list above. If N/A, enter -1:");
             var secondaryColorId = input.nextLong();
             input.nextLine();
-            if(secondaryColorId > 0) {
+            if(secondaryColorId >= 0) {
                 var secondaryColor = new ItemAttribute();
                 secondaryColor.attributeRecommendationId = secondaryColorId;
                 newItem.generalItemAttributes.secondaryColor = secondaryColor;
@@ -170,7 +175,7 @@ public class Index {
         });
         var materialId = input.nextLong();
         input.nextLine();
-        if(materialId > 0) {
+        if(materialId >= 0) {
             var material = new ItemAttribute();
             material.attributeRecommendationId = materialId;
             newItem.generalItemAttributes.material = material;
@@ -202,7 +207,7 @@ public class Index {
         });
         var selectionId = input.nextLong();
         input.nextLine();
-        if(selectionId > -1) {
+        if(selectionId >= 0) {
             var itemAttribute = new ItemAttribute();
             itemAttribute.attributeRecommendationId = selectionId;
             itemAttribute.subcategoryAttributeId = attribute.id;
