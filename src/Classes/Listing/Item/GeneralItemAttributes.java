@@ -53,35 +53,4 @@ public class GeneralItemAttributes {
      * @modifiedby The user
      */
     public ItemAttribute material;
-
-    //other fields
-    /**
-     * The measurements of the item. See ItemMeasurement for details.
-     *
-     * OPTIONAL FIELDS
-     *
-     * @setby The Android app when the user enters measurements
-     * @setwhen Saving a new item
-     * @modifywhen The measurements are modified on an existing item
-     * @modifiedby The user
-     */
-    public List<ItemMeasurement> measurements;
-    /**
-     * The size of the item. See ItemSize for details.
-     *
-     * REQUIRED FIELD
-     *
-     * @setby The Android app when the user selects the size type and size value
-     * @setwhen Saving a new item
-     * @modifywhen The size type and size value are modified on an existing item
-     * @modifiedby The user
-     */
-    public ItemSize size;
-
-    /**
-     * Constructor, initializes the list of measurements
-     */
-    public GeneralItemAttributes() {
-        this.measurements = new ArrayList<ItemMeasurement>();
-    }
 }

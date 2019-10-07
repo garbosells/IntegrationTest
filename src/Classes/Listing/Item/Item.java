@@ -98,7 +98,29 @@ public class Item {
      */
     public String[] tags;
     /**
-     * A set of attributes that generally applies to most items, regardless of subcategory, with the exception of <code>size</code> and <code>measurements</code>, which may or may not be present depending on the Category.
+     * The measurements of the item. Only applies if <code>category.hasMeasurements == TRUE</code> May be empty. See ItemMeasurement for details.
+     *
+     * OPTIONAL FIELDS
+     *
+     * @setby The Android app when the user enters measurements
+     * @setwhen Saving a new item
+     * @modifywhen The measurements are modified on an existing item
+     * @modifiedby The user
+     */
+    public List<ItemMeasurement> measurements;
+    /**
+     * The size of the item. See ItemSize for details.
+     *
+     * REQUIRED FIELD if <code>category.hasSizing == TRUE</code>
+     *
+     * @setby The Android app when the user selects the size type and size value
+     * @setwhen Saving a new item
+     * @modifywhen The size type and size value are modified on an existing item
+     * @modifiedby The user
+     */
+    public ItemSize size;
+    /**
+     * A set of attributes that generally applies to all items, regardless of subcategory.
      * @setby The user when completing the item creation wizard.
      * @setwhen Creating an item in the Android app
      * @modifywhen Saving an existing item.
@@ -120,6 +142,7 @@ public class Item {
     public Item() {
         this.generalItemAttributes = new GeneralItemAttributes();
         this.attributes = new ArrayList<ItemAttribute>();
+        this.measurements = new ArrayList<ItemMeasurement>();
     }
 
     /**
@@ -134,13 +157,13 @@ public class Item {
             System.out.println("Primary Color ID: " + generalItemAttributes.primaryColor.attributeRecommendationId);
         if(generalItemAttributes.secondaryColor != null)
             System.out.println("Secondary Color ID: " + generalItemAttributes.secondaryColor.attributeRecommendationId);
-        if(generalItemAttributes.size != null) {
-            System.out.println("Size Type ID: " + generalItemAttributes.size.sizeTypeId);
-            System.out.println("Size Value ID: " + generalItemAttributes.size.sizeValueId);
+        if(size != null) {
+            System.out.println("Size Type ID: " + size.sizeTypeId);
+            System.out.println("Size Value ID: " + size.sizeValueId);
         }
-        if(!generalItemAttributes.measurements.isEmpty()) {
+        if(!measurements.isEmpty()) {
             System.out.println("Measurements by ID and value:");
-            generalItemAttributes.measurements.forEach(m -> {
+            measurements.forEach(m -> {
                 System.out.println(m.categoryMeasurementId + ": " + m.itemMeasurementValue);
             });
         }
