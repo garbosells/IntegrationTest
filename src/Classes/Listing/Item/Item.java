@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Represents an "Item" or "Listing" as it is represented in the app.
+ */
 public class Item {
     /**
      * The date/time when the item was originally created.
@@ -46,13 +49,17 @@ public class Item {
      */
     public long updatedByUserId;
     /**
-     * The ID of the item. This is the primary key identifying the item in the database. When creating a new item in the app, this will just be set to -1 in the code, but it will NOT be saved in the database this way.
+     * The ID of the item. This is the primary key identifying the item in the database.
+     * <p>
+     *     NOTE: This will be NULL when creating a new item in the app. It is not set until the item is saved.
+     * </p>
+     *
      * @setby The database (should be set to autoincrement)
      * @setwhen A new item is saved to the database
      * @modifywhen Never.
      * @modifiedby No one.
      */
-    public long id;
+    public Long id; //nullable
     /**
      * This field will become the title of the listing once it is posted to Ebay/Etsy
      * @setby The user in the frontend Android app
@@ -119,6 +126,7 @@ public class Item {
      * This exists for testing purposes.
      */
     public void print() {
+        System.out.println("Item ID: " + id);
         System.out.println("Item Cateogory ID: " + categoryId);
         System.out.println("Item Subcategory ID: " + subcategoryId);
         System.out.println("Short Description: " + shortDescription);

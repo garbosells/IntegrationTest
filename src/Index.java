@@ -30,10 +30,6 @@ public class Index {
         newItem.createdByUserId = 0;
         newItem.updatedByUserId = newItem.createdByUserId;
 
-        //This is a new item. The id should be set by the database (autoincrementing)
-        //If this were an existing item being edited, then we would have a value here that would not be modified ever
-        newItem.id = -1;
-
         var subcategoryId = GetCategoryAndSubcategory();
         template = methods.GetTemplateBySubcategoryId(subcategoryId); //should actually be done asychronously
 
@@ -139,7 +135,7 @@ public class Index {
         });
         var primaryColorId = input.nextLong();
         input.nextLine();
-        if(primaryColorId > 0) {
+        if(primaryColorId >= 0) {
             var primaryColor = new ItemAttribute();
             primaryColor.attributeRecommendationId = primaryColorId;
             newItem.generalItemAttributes.primaryColor = primaryColor;
