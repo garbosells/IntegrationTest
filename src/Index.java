@@ -123,7 +123,7 @@ public class Index {
 
             //if we were editing an existing item/measurement, the id would already exist
             //since this is a new item, there is no id for this. it is set by the database
-            newItem.measurements.add(new ItemMeasurement(m.id, -1, value));
+            newItem.measurements.add(new ItemMeasurement(m.id, null, value));
         });
     }
 

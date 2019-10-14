@@ -11,7 +11,7 @@ public class ItemAttribute {
      *</p>
      *
      * @setby The app when the user supplies a value for the attribute.
-     * @setwhen Creating an item in the Android app
+     * @setwhen Creating an item in the Android app.
      * @modifywhen Editing an item in the Android app.
      * @modifiedby The app when the user supplies a new value for the attribute.
      */
@@ -21,10 +21,10 @@ public class ItemAttribute {
      * <p>
      *     NOTE: This will be NULL when creating a new item in the app. It is not set until the item is saved.
      * </p>
-     * @setby The database (should be autoincremented)
-     * @setwhen Saving a new item
-     * @modifywhen Never
-     * @modifiedby No one
+     * @setby The database (should be autoincremented).
+     * @setwhen Saving a new item.
+     * @modifywhen Never.
+     * @modifiedby No one.
      */
     public Long itemAttributeId; //nullable
     /**
@@ -32,18 +32,18 @@ public class ItemAttribute {
      * <p>
      *     NOTE: This will likely not be used as no attributes currently have custom values enabled.
      * </p>
-     * @setby The user when setting a custom value for an attribute
-     * @setwhen Saving a new item
-     * @modifywhen Saving an existing item
-     * @modifiedby The user when modifying a custom value or changing an attribute to have a custom value
+     * @setby The user when setting a custom value for an attribute.
+     * @setwhen Saving a new item.
+     * @modifywhen Saving an existing item.
+     * @modifiedby The user when modifying a custom value or changing an attribute to have a custom value.
      */
     public String itemAttributeValue; //could be a string, bool, or number, but we'll store it as a string for simplicity
     /**
      * The ID of the value that the user selected for the attribute.
-     * @setby The user when setting a value for an attribute
-     * @setwhen Saving a new item
-     * @modifywhen Saving an existing item
-     * @modifiedby The user when modifying the value of an attribute
+     * @setby The user when setting a value for an attribute.
+     * @setwhen Saving a new item.
+     * @modifywhen Saving an existing item.
+     * @modifiedby The user when modifying the value of an attribute.
      */
     public Long attributeRecommendationId; //nullable, used if the user chose a "recommended" value for the attribute
 }

@@ -88,7 +88,7 @@ public class Item {
      * The ID of the subcategory that the item belongs to.
      * @setby The Android app on item creation (the Subcategory is set by the user, the ID is saved)
      * @setwhen Creating an item in the Android app
-     * @modifywhen Never. Once the category is set, it should not be modified.
+     * @modifywhen Never. Once the subcategory is set, it should not be modified.
      * @modifiedby No one.
      */
     public long subcategoryId;
@@ -102,10 +102,10 @@ public class Item {
      *
      * OPTIONAL FIELDS
      *
-     * @setby The Android app when the user enters measurements
-     * @setwhen Saving a new item
-     * @modifywhen The measurements are modified on an existing item
-     * @modifiedby The user
+     * @setby The Android app when the user enters measurements.
+     * @setwhen Saving a new item.
+     * @modifywhen The measurements are modified on an existing item.
+     * @modifiedby The user.
      */
     public List<ItemMeasurement> measurements;
     /**
@@ -113,24 +113,24 @@ public class Item {
      *
      * REQUIRED FIELD if <code>category.hasSizing == TRUE</code>
      *
-     * @setby The Android app when the user selects the size type and size value
-     * @setwhen Saving a new item
-     * @modifywhen The size type and size value are modified on an existing item
-     * @modifiedby The user
+     * @setby The Android app when the user selects the size type and size value.
+     * @setwhen Saving a new item.
+     * @modifywhen The size type and size value are modified on an existing item.
+     * @modifiedby The user.
      */
     public ItemSize size;
     /**
      * A set of attributes that generally applies to all items, regardless of subcategory.
      * @setby The user when completing the item creation wizard.
-     * @setwhen Creating an item in the Android app
+     * @setwhen Creating an item in the Android app.
      * @modifywhen Saving an existing item.
      * @modifiedby The user.
      */
     public GeneralItemAttributes generalItemAttributes;
     /**
-     * A set of attributes unique to the particular subcategory selected. A given subcategory may have 0 or more of these.
+     * A set of attributes that apply to the particular subcategory selected. A given subcategory may have 0 or more of these.
      * @setby The user when completing the item creation wizard.
-     * @setwhen Creating an item in the Android app
+     * @setwhen Creating an item in the Android .
      * @modifywhen Saving an existing item.
      * @modifiedby The user.
      */

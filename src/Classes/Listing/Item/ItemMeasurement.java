@@ -8,7 +8,7 @@ public class ItemMeasurement {
      * The ID of the measurement field (IE, chest, length, etc), provided by the template.
      *
      * @setby The Android app when the user sets a value for a measurement. Assigned to correspond to the ID provided by the template.
-     * @setwhen Saving a new item
+     * @setwhen Saving a new item.
      * @modifywhen Never.
      * @modifiedby No one.
      */
@@ -18,27 +18,27 @@ public class ItemMeasurement {
      * <p>
      *     NOTE: This will be NULL when creating a new item in the app. It is not set until the item is saved.
      * </p>
-     * @setby The database (should be autoincremented)
-     * @setwhen Saving a new item
-     * @modifywhen Never
-     * @modifiedby No one
+     * @setby The database (should be autoincremented).
+     * @setwhen Saving a new item.
+     * @modifywhen Never.
+     * @modifiedby No one.
      */
     public Long itemMeasurementId;
     /**
      * The value of the measurement as provided by the user.
      * Assumed to be inches.
      *
-     * @setby The user
-     * @setwhen Creating an item in the app
-     * @modifywhen Editing an existing item in the app
-     * @modifiedby The user
+     * @setby The user.
+     * @setwhen Creating an item in the app.
+     * @modifywhen Editing an existing item in the app.
+     * @modifiedby The user.
      */
     public double itemMeasurementValue;
 
     /**
      * Constructor. All three fields are required.
      */
-    public ItemMeasurement(long categoryMeasurementId, long itemMeasurementId, double itemMeasurementValue) {
+    public ItemMeasurement(long categoryMeasurementId, Long itemMeasurementId, double itemMeasurementValue) {
         this.categoryMeasurementId = categoryMeasurementId;
         this.itemMeasurementId = itemMeasurementId;
         this.itemMeasurementValue = itemMeasurementValue;
