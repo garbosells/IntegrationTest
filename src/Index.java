@@ -1,7 +1,4 @@
-import Classes.Listing.Item.Item;
-import Classes.Listing.Item.ItemAttribute;
-import Classes.Listing.Item.ItemMeasurement;
-import Classes.Listing.Item.ItemSize;
+import Classes.Listing.Item.*;
 import Classes.Template.Attribute;
 import Classes.Template.Size;
 import Classes.Template.Template;
@@ -54,10 +51,16 @@ public class Index {
 
         System.out.println("Enter the listing text (long description) for the item:");
         newItem.longDescription = input.nextLine();
+        System.out.println();
+        System.out.println("Here's the item for your new listing:");
         newItem.print();
 
+        Listing listing = new Listing();
+        listing.inventoryItem = newItem;
         Gson gson = new Gson();
-        var json = gson.toJson(newItem);
+        var json = gson.toJson(listing);
+        System.out.println();
+        System.out.println("JSONified:");
         System.out.println(json);
     }
 
