@@ -5,7 +5,7 @@
     <option name="OTHER_OPTIONS" value="-tag setby:a:&quot;Set By:&quot; -tag setwhen:a:&quot;Set When:&quot; -tag modifiedby:a:&quot;Can Be Modified By:&quot; -tag modifywhen:a:&quot;Can Be Modified When:&quot;" />
     <option name="OPTION_INCLUDE_LIBS" value="true" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="13" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

@@ -5,63 +5,104 @@ import Classes.Template.Template;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Index {
     static Template template;
     static Item newItem;
+    static SimpleListing newListing;
     static Scanner input;
     static Methods methods;
     public static void main(String[] args) throws IOException {
         methods = new Methods();
-        newItem = new Item();
-
+        int choice = 4;
         input = new Scanner(System.in);
-        //this is a new item being created, set its creation datetime
-        newItem.createdDateTime = new Date();
-        newItem.updatedDateTime = newItem.createdDateTime;
+        do {
+            ChoiceMenu();
+            choice = input.nextInt();
+            switch (choice) {
+                case 0:
+                    DisplayAllListings();
+                    break;
+                case 1:
+                    System.out.println("Enter the id of the item you would like to retrieve");
+                    DisplayListingById(input.nextInt());
+                    break;
+                case 2:
+                    System.out.println("What is the id of the listing you would like to update?");
+                    UpdateListing(input.nextInt());
+                    break;
+                case 3:
+                    SaveListing();
+                    break;
+            }
+        }while(choice != 4);
+    }
 
-        //set the user who created/updated the item based on who is logged in
-        //note - this is the userId, not userLoginId
-        newItem.createdByUserId = 0;
-        newItem.updatedByUserId = newItem.createdByUserId;
 
+    private static void ChoiceMenu(){
+        System.out.println("Choose what you would you like to do:");
+        System.out.println("0: Get all listings");
+        System.out.println("1: Get a listing by id");
+        System.out.println("2: Update an Existing listing");
+        System.out.println("3: Save a new listing");
+        System.out.println("4: I'm done");
+    }
+
+    private static void SubChoiceMenu(){
+        System.out.println("What would you like to update for this listing?");
+        System.out.println("a: Short Description");
+        System.out.println("b: Long Description");
+    }
+
+    private static void DisplayAllListings() throws IOException{
+        var listings = methods.GetListings();
+        listings.forEach(l-> {
+           System.out.println(l);
+        });
+    }
+
+    private static void DisplayListingById(int id) throws IOException{
+        System.out.println(methods.GetListingById(id).toString());
+    }
+
+    private static void UpdateListing(int id) throws IOException{
+        SubChoiceMenu();
+        SimpleListing lu = methods.GetListingById(id);
+        switch(input.next()){
+            case "a":
+                System.out.println("Enter the new Short Description");
+                input.nextLine();
+                lu.SetShortDescription(input.nextLine());
+                break;
+            case "b":
+                System.out.println("Enter the new Long Description");
+                input.nextLine();
+                lu.SetLongDescription(input.nextLine());
+                break;
+        }
+        lu.UpdateUserId(0);
+        methods.PutListing(id, lu);
+    }
+
+    private static void SaveListing() throws IOException{
+        newListing = new SimpleListing();
         var subcategoryId = GetCategoryAndSubcategory();
         template = methods.GetTemplateBySubcategoryId(subcategoryId); //should actually be done asychronously
-
-        //set category/subcategory
-        newItem.categoryId = template.category.id;
-        newItem.subcategoryId = template.subcategory.id;
-
+        newListing.categoryId = template.category.id;
+        newListing.subcategoryId = template.subcategory.id;
+        newListing.createdByUserId = 0;
+        newListing.updatedByUserId = newListing.createdByUserId;
         System.out.println("You're entering a new item in " + template.subcategory.description);
-
         //Get the short description (listing title)
         System.out.println("Enter the listing title: ");
-        newItem.shortDescription = input.nextLine();
-
-        if(template.category.hasSizing)
-            GetAndSetSize();
-        if(template.category.hasMeasurements)
-            GetAndSetMeasurements();
-        GetEra();
-        GetColors();
-        GetMaterial();
-        GetSubcategoryAttributes();
-
-        System.out.println("Enter the listing text (long description) for the item:");
-        newItem.longDescription = input.nextLine();
-        System.out.println();
-        System.out.println("Here's the item for your new listing:");
-        newItem.print();
-
-        Listing listing = new Listing();
-        listing.inventoryItem = newItem;
-        Gson gson = new Gson();
-        var json = gson.toJson(listing);
-        System.out.println();
-        System.out.println("JSONified:");
-        System.out.println(json);
+        newListing.SetShortDescription(input.nextLine());
+        System.out.println("Enter the listing text (long description):");
+        newListing.SetLongDescription(input.nextLine());
+        methods.PostListing(newListing);
     }
 
     private static long GetCategoryAndSubcategory() throws IOException {
