@@ -12,7 +12,7 @@ public class ItemMeasurement {
      * @modifywhen Never.
      * @modifiedby No one.
      */
-    public long categoryMeasurementId;
+    public Long categoryMeasurementId;
     /**
      * The ID of the measurement. Set by the database and used to relate the measurement to the Item.
      * <p>

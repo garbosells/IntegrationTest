@@ -1,4 +1,4 @@
-import Classes.Listing.Item.SimpleListing;
+import Classes.Listing.Item.*;
 import Classes.Template.Category;
 import Classes.Template.Subcategory;
 import Classes.Template.Template;
@@ -19,15 +19,16 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class Methods {
-    public List<SimpleListing> GetListings() throws IOException{
+    private static String dataServiceBaseUrl = "https://localhost:44321/";
+    public List<Listing> GetAllListings() throws IOException{
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        var url ="https://listingdataservicev120191116043429.azurewebsites.net/api/GetListings";
+        var url = dataServiceBaseUrl+"api/ListingsWeb/GetAllListings";
         HttpGet httpGet = new HttpGet(url);
         try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
             HttpEntity entity = response.getEntity();
             var json = EntityUtils.toString(entity);
-            Type ListingListType = new TypeToken<List<SimpleListing>>(){}.getType();
-            List<SimpleListing> Listings = new Gson().fromJson(json, ListingListType);
+            Type ListingListType = new TypeToken<List<Listing>>(){}.getType();
+            List<Listing> Listings = new Gson().fromJson(json, ListingListType);
             EntityUtils.consume(entity);
             return Listings;
         } catch (Exception ex) {
@@ -36,15 +37,15 @@ public class Methods {
         }
     }
 
-    public SimpleListing GetListingById(int id) throws IOException{
+    public Listing GetListingById(int id) throws IOException{
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        var url ="https://listingdataservicev120191116043429.azurewebsites.net/api/GetListing/"+id;
+        var url = dataServiceBaseUrl+"api/ListingsWeb/GetListing/"+id;
         HttpGet httpGet = new HttpGet(url);
         try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
             HttpEntity entity = response.getEntity();
             var json = EntityUtils.toString(entity);
-            Type ListingType = new TypeToken<SimpleListing>(){}.getType();
-            SimpleListing Listing = new Gson().fromJson(json, ListingType);
+            Type ListingType = new TypeToken<Listing>(){}.getType();
+            Listing Listing = new Gson().fromJson(json, ListingType);
             EntityUtils.consume(entity);
             return Listing;
         } catch (Exception ex) {
@@ -53,9 +54,9 @@ public class Methods {
         }
     }
 
-    public String PostListing(SimpleListing listing) throws IOException{
+    public String PostListing(Listing listing) throws IOException{
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        var url ="https://listingdataservicev120191116043429.azurewebsites.net/api/PostListing";
+        var url = dataServiceBaseUrl+"api/ListingsWeb/SaveListing";
         HttpPost httpPost = new HttpPost(url);
         Gson gson = new Gson();
         httpPost.setEntity(new StringEntity(gson.toJson(listing)));
@@ -65,15 +66,15 @@ public class Methods {
             HttpEntity entity = response.getEntity();
             var json = EntityUtils.toString(entity);
             EntityUtils.consume(entity);
-            return json.toString();
+            return json;
         } catch (Exception ex) {
             System.out.println("Unable to complete operation, error: " + ex.toString());
             return null;
         }
     }
-    public void PutListing(int id, SimpleListing listing) throws IOException{
+    public void PutListing(Listing listing) throws IOException{
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        var url ="https://listingdataservicev120191116043429.azurewebsites.net/api/PutListing/"+id;
+        var url =dataServiceBaseUrl+"api/ListingsWeb/UpdateListing";
         HttpPut httpPut = new HttpPut(url);
         Gson gson = new Gson();
         httpPut.setEntity(new StringEntity(gson.toJson(listing)));

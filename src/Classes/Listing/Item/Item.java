@@ -148,33 +148,36 @@ public class Item {
     /**
      * This exists for testing purposes.
      */
-    public void print() {
-        System.out.println("Item ID: " + id);
-        System.out.println("Item Cateogory ID: " + categoryId);
-        System.out.println("Item Subcategory ID: " + subcategoryId);
-        System.out.println("Short Description: " + shortDescription);
+    public String toString() {
+        String itemString= "Item ID: " + id+'\n'+
+        "Item Cateogory ID: " + categoryId+'\n'+
+        "Item Subcategory ID: " + subcategoryId+'\n'+
+        "Short Description: " + shortDescription+'\n';
         if(generalItemAttributes.primaryColor != null)
-            System.out.println("Primary Color ID: " + generalItemAttributes.primaryColor.attributeRecommendationId);
+            itemString+="Primary Color ID: " + generalItemAttributes.primaryColor.attributeRecommendationId+'\n';
         if(generalItemAttributes.secondaryColor != null)
-            System.out.println("Secondary Color ID: " + generalItemAttributes.secondaryColor.attributeRecommendationId);
+            itemString+="Secondary Color ID: " + generalItemAttributes.secondaryColor.attributeRecommendationId+'\n';
         if(size != null) {
-            System.out.println("Size Type ID: " + size.sizeTypeId);
-            System.out.println("Size Value ID: " + size.sizeValueId);
+            itemString+="Size Type ID: " + size.sizeTypeId+'\n';
+            itemString+="Size Value ID: " + size.sizeValueId+'\n';
         }
         if(!measurements.isEmpty()) {
-            System.out.println("Measurements by ID and value:");
-            measurements.forEach(m -> {
-                System.out.println(m.categoryMeasurementId + ": " + m.itemMeasurementValue);
-            });
+            itemString+="Measurements by ID and value:"+'\n';
+            final String measString = "";
+            for(int i = 0; i < measurements.size();i++){
+                itemString+=measurements.get(i).categoryMeasurementId + ": " + measurements.get(i).itemMeasurementValue+'\n';
+            }
         }
         if(generalItemAttributes.material != null)
-            System.out.println("Material ID: " + generalItemAttributes.material.attributeRecommendationId);
+            itemString+="Material ID: " + generalItemAttributes.material.attributeRecommendationId+'\n';
         if(generalItemAttributes.era != null)
-            System.out.println("Era ID: " + generalItemAttributes.era.attributeRecommendationId);
-        if(!attributes.isEmpty())
-            attributes.forEach(a -> {
-                System.out.println("Subcategory Attribute ID " + a.subcategoryAttributeId + " has value:");
-                System.out.println(a.attributeRecommendationId == null ? a.itemAttributeValue : a.attributeRecommendationId);
-            });
+            itemString+="Era ID: " + generalItemAttributes.era.attributeRecommendationId+'\n';
+        if(!attributes.isEmpty()) {
+            for (int i = 0; i < attributes.size(); i++) {
+                itemString += "Subcategory Attribute ID " + attributes.get(i).subcategoryAttributeId + " has value:" + '\n';
+                itemString += attributes.get(i).attributeRecommendationId == null ? attributes.get(i).itemAttributeValue : attributes.get(i).attributeRecommendationId + '\n';
+            }
+        }
+        return itemString;
     }
 }

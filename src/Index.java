@@ -12,8 +12,7 @@ import java.util.Scanner;
 
 public class Index {
     static Template template;
-    static Item newItem;
-    static SimpleListing newListing;
+    static Listing newListing;
     static Scanner input;
     static Methods methods;
     public static void main(String[] args) throws IOException {
@@ -55,11 +54,12 @@ public class Index {
     private static void SubChoiceMenu(){
         System.out.println("What would you like to update for this listing?");
         System.out.println("a: Short Description");
+
         System.out.println("b: Long Description");
     }
 
     private static void DisplayAllListings() throws IOException{
-        var listings = methods.GetListings();
+        var listings = methods.GetAllListings();
         listings.forEach(l-> {
            System.out.println(l);
         });
@@ -71,37 +71,46 @@ public class Index {
 
     private static void UpdateListing(int id) throws IOException{
         SubChoiceMenu();
-        SimpleListing lu = methods.GetListingById(id);
+        Listing lu = methods.GetListingById(id);
         switch(input.next()){
             case "a":
                 System.out.println("Enter the new Short Description");
                 input.nextLine();
-                lu.SetShortDescription(input.nextLine());
+                lu.inventoryItem.shortDescription = input.nextLine();
                 break;
             case "b":
                 System.out.println("Enter the new Long Description");
                 input.nextLine();
-                lu.SetLongDescription(input.nextLine());
+                lu.inventoryItem.longDescription = input.nextLine();
                 break;
         }
-        lu.UpdateUserId(0);
-        methods.PutListing(id, lu);
+        lu.inventoryItem.updatedByUserId=0;
+        methods.PutListing(lu);
     }
 
     private static void SaveListing() throws IOException{
-        newListing = new SimpleListing();
+        newListing = new Listing();
+        newListing.inventoryItem = new Item();
+        newListing.inventoryItem.createdDateTime = new Date();
+        newListing.inventoryItem.updatedDateTime = new Date();
         var subcategoryId = GetCategoryAndSubcategory();
         template = methods.GetTemplateBySubcategoryId(subcategoryId); //should actually be done asychronously
-        newListing.categoryId = template.category.id;
-        newListing.subcategoryId = template.subcategory.id;
-        newListing.createdByUserId = 0;
-        newListing.updatedByUserId = newListing.createdByUserId;
+        newListing.inventoryItem.categoryId = template.category.id;
+        newListing.inventoryItem.subcategoryId = template.subcategory.id;
+        newListing.inventoryItem.createdByUserId = 0;
+        newListing.inventoryItem.updatedByUserId = 0;
+        GetAndSetMeasurements();
+        GetAndSetSize();
+        GetEra();
+        GetColors();
+        GetMaterial();
+        GetSubcategoryAttributes();
         System.out.println("You're entering a new item in " + template.subcategory.description);
         //Get the short description (listing title)
         System.out.println("Enter the listing title: ");
-        newListing.SetShortDescription(input.nextLine());
+        newListing.inventoryItem.shortDescription=input.nextLine();
         System.out.println("Enter the listing text (long description):");
-        newListing.SetLongDescription(input.nextLine());
+        newListing.inventoryItem.longDescription=input.nextLine();
         methods.PostListing(newListing);
     }
 
@@ -154,7 +163,7 @@ public class Index {
         input.nextLine();
 
         //Set the size
-        newItem.size = new ItemSize(sizeTypeId, sizeValueId);
+        newListing.inventoryItem.size = new ItemSize(sizeTypeId, sizeValueId);
     }
 
     private static void GetAndSetMeasurements() {
@@ -167,7 +176,7 @@ public class Index {
 
             //if we were editing an existing item/measurement, the id would already exist
             //since this is a new item, there is no id for this. it is set by the database
-            newItem.measurements.add(new ItemMeasurement(m.id, null, value));
+            newListing.inventoryItem.measurements.add(new ItemMeasurement(m.id, null, value));
         });
     }
 
@@ -182,7 +191,7 @@ public class Index {
         if(primaryColorId >= 0) {
             var primaryColor = new ItemAttribute();
             primaryColor.attributeRecommendationId = primaryColorId;
-            newItem.generalItemAttributes.primaryColor = primaryColor;
+            newListing.inventoryItem.generalItemAttributes.primaryColor = primaryColor;
 
             System.out.println("Enter the ID for the secondary color from the list above. If N/A, enter -1:");
             var secondaryColorId = input.nextLong();
@@ -190,7 +199,7 @@ public class Index {
             if(secondaryColorId >= 0) {
                 var secondaryColor = new ItemAttribute();
                 secondaryColor.attributeRecommendationId = secondaryColorId;
-                newItem.generalItemAttributes.secondaryColor = secondaryColor;
+                newListing.inventoryItem.generalItemAttributes.secondaryColor = secondaryColor;
             }
         }
     }
@@ -204,7 +213,7 @@ public class Index {
         var eraId = input.nextLong();
         var newEra = new ItemAttribute();
         newEra.attributeRecommendationId = eraId;
-        newItem.generalItemAttributes.era = newEra;
+        newListing.inventoryItem.generalItemAttributes.era = newEra;
     }
 
     private static void GetMaterial() {
@@ -218,7 +227,7 @@ public class Index {
         if(materialId >= 0) {
             var material = new ItemAttribute();
             material.attributeRecommendationId = materialId;
-            newItem.generalItemAttributes.material = material;
+            newListing.inventoryItem.generalItemAttributes.material = material;
         }
     }
 
@@ -234,7 +243,7 @@ public class Index {
                     attribute = GetAttributeValueFromSeekbar(a);
                 }
                 if(attribute != null)
-                    newItem.attributes.add(attribute);
+                    newListing.inventoryItem.attributes.add(attribute);
             });
         }
     }
